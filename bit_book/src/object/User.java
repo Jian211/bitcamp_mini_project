@@ -1,18 +1,17 @@
 package object;
 
 public class User {
-	private int		userId;		// À¯Àú °íÀ¯¹øÈ£
-	private String	userName;	// À¯Àú ÀÌ¸§
-	private String	password;	// À¯Àú ÆĞ½º¿öµå
-	private String	name;		// À¯Àú ÀÌ¸§   !À¯Àú ·Î±×ÀÎ¾ÆÀÌµğ(userName)°ú À¯ÀúÀÌ¸§(name) Á¶½É!
-	private String	email;		// À¯Àú ÀÌ¸ŞÀÏ
-	private String	phnum;		// À¯Àú ÇÚµåÆù ¹øÈ£
-	private String	address;	// À¯Àú ÁÖ¼Ò 
+//	private int		userId;		// ìœ ì € ê³ ìœ ë²ˆí˜¸ : DBì—ì„œ ê´€ë¦¬
+	private String	userName;	// ìœ ì € ë¡œê·¸ì¸ì•„ì´ë””
+	private String	password;	// ìœ ì € ë¡œê·¸ì¸ë¹„ë°€ë²ˆí˜¸
+	private String	name;		// ìœ ì € ì´ë¦„
+	private String	email;		// ìœ ì € ì´ë©”ì¼
+	private String	phnum;		// ìœ ì € ì „í™”ë²ˆí˜¸
+	private String	address;	// ìœ ì € ì£¼ì†Œ
 	
 
-	public User(int userId, String userName, String password, String name, String email, String phnum, String address) {
+	public User( String userName, String password, String name, String email, String phnum, String address) {
 		super();
-		this.userId = userId;
 		this.userName = userName;
 		this.password = password;
 		this.name = name;
@@ -21,22 +20,8 @@ public class User {
 		this.address = address;
 	}
 	
+	public User() {}
 	
-	
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", userName=" + userName + ", password=" + password + ", name=" + name
-				+ ", email=" + email + ", phnum=" + phnum + ", address=" + address + "]";
-	}
-
-
-
-	public int getUserId() {
-		return userId;
-	}
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
 	public String getUserName() {
 		return userName;
 	}
@@ -74,5 +59,13 @@ public class User {
 		this.address = address;
 	}
 	
-	
+
+	@Override
+	public String toString() {
+		return "User [" + "userName=" + userName + ", password=" + password + ", name=" + name
+				+ ", email=" + email + ", phnum=" + phnum + ", address=" + address + "]";
+	}
+
+
+
 }

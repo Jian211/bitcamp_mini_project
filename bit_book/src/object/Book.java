@@ -1,32 +1,34 @@
 package object;
 
 public class Book {
-	private int		bookid;		 //	책 고유번호
-	private String  bookName;	 // 책 이름
-	private int 	price;		 // 책 가격
-	private String  witer;		 // 책 저자
-	private String  category;	 // 책 카테고리
-	private String  publisher;	 // 책 정보
-	private int		stock;		 // 책 재고
+	private int		bookid;			
+	private String  bookName;	 
+	private int 	price;		 
+	private String  writer;		 
+	private String  publisher;
+	private int  category;	 
+	private int	stock;		 
 	
-	public Book(int bookid, String bookName, int price, String witer, String category, String publisher, int stock) {
-		super();
+	public Book(int bookid, String bookName, int price, String writer, String publisher, int category,int stock) {
 		this.bookid = bookid;
 		this.bookName = bookName;
 		this.price = price;
-		this.witer = witer;
-		this.category = category;
+		this.writer = writer;
 		this.publisher = publisher;
+		this.category = category;
 		this.stock = stock;
 	}
 	
-	
-	@Override
-	public String toString() {
-		return "Book [bookid=" + bookid + ", bookName=" + bookName + ", price=" + price + ", witer=" + witer
-				+ ", category=" + category + ", publisher=" + publisher + ", stock=" + stock + "]";
+
+	public Book() {
 	}
 
+
+	@Override
+	public String toString() {
+		return "Book [bookName=" + bookName + ", price=" + price + ", writer=" + writer
+				+ ", publisher=" + publisher + ", category=" + category + ", stock=" + stock + "]";
+	}
 
 	public int getBookid() {
 		return bookid;
@@ -46,16 +48,16 @@ public class Book {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public String getWiter() {
-		return witer;
+	public String getWriter() {
+		return writer;
 	}
-	public void setWiter(String witer) {
-		this.witer = witer;
+	public void setWriter(String writer) {
+		this.writer = writer;
 	}
-	public String getCategory() {
+	public int getCategory() {
 		return category;
 	}
-	public void setCategory(String category) {
+	public void setCategory(int category) {
 		this.category = category;
 	}
 	public String getPublisher() {

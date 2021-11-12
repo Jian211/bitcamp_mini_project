@@ -1,188 +1,83 @@
 package controller;
 
-import java.sql.Connection;
-
 import dao.UserDao;
+import object.User;
+import util.PatternChk;
 
 public class UserController {
 
-	UserDao userDao;
+	public UserDao userDao;
+	public PatternChk patternChk = new PatternChk();
 	
 	public UserController() {
 		userDao = UserDao.getInstance();
+
 	}
 	
 	
 	//////////////////////  JOIN ////////////////////////////////////
-	
-	
-	// 보류
-	/*
-		전체 회원 리스트 만들기 : select
-			public List<User> selectAllList(Connection conn){
-				Statement stmt = null;
-				ResultSet rs = null;
-				List<User> list = new ArrayList<User>();
-				
-				try {
-					stmt = conn.createStatement();
-					String sql = "select * from bit_users";
-					
-					rs = stmt.executeQuery(sql);
-					while(rs.next()) {
-						list.add(new User(rs.getInt(1), rs.getString(2), rs.getString(3), 
-								rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
-					}
-					
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} finally {
-					JdbcUtil.close(rs);
-					JdbcUtil.close(stmt);
-				}
-				
-				return list;
-			}
-	 */
-	
+	public void joinUser(String userName, String password, String name, String email, String phnum, String address) {	
+		User user = new User(userName, password, name, email, phnum, address);
+		int result = userDao.insertUser(user);
+		if(result > 0) {
+			System.out.println("회원가입이 완료되었습니다.");
+		}
+	}
 	
 	
 	//////////////////////  LOGIN ////////////////////////////////////
 	
-	// 로그인
-	public void logIn(Connection conn) {
-		while (true) {
-			/*
-			System.out.println("아이디를 입력해주세요.");
-			System.out.print("> ");
-			String username = getString();
-			System.out.println("비밀번호를 입력해주세요.");
-			System.out.print("> ");
-			String password = getString();
-
-			logIn = userDao.auth(conn, username, password);
-			if (logIn == null) {
-				System.out.println("로그인에 실패했습니다. 다시 한 번 확인해주세요.");
-			} else {
-				System.out.println("로그인 성공!");
-				System.out.println(logIn.getName() + " 님, 환영합니다.");
-				break;
-			}
-			*/
-		}
-	}
-	
-	
-	
-	// 로그인 성공/실패 여부 
-	public int auth(String username, String password) {
+	// 로그인에 성공하면 해당 유저의 고유번호를 리턴하는 메소드
+	public int auth(String userName, String password) {
 		int result = 0;
-		result = userDao.authChk(username, password);
+		result = userDao.authChk(userName, password);
 
 		return result;
 	}
-
-	
-	
 	
 
 	//////////////////////  내정보 ////////////////////////////////////
 
+	// 회원정보 보기
+	public void showInfo(int userId) {
+		User user = userDao.selectByUserId(userId);
+		
+		System.out.println("================================");
+		System.out.println("\t" + user.getName() + " 님의 정보");
+		System.out.println("================================");
+		
+		System.out.println("회원번호: " + userId);
+		System.out.println("아이디: " + user.getUserName());
+		System.out.println("이름: " + user.getName());
+		System.out.println("이메일: " + user.getEmail());
+		System.out.println("전화번호: " + user.getPhnum());
+		System.out.println("주소: " + user.getAddress());
+	}
 	
-	
-	///////////////////// 	기타		//////////////////////////////////
-
-	
-	/*
-		// 공백을 입력하면 예외가 발생하는
-		public String getString() {
-			String result = null;
-	
-			while (true) {
-	
-				result = sc.nextLine().trim();
-				if (result.isEmpty()) {
-					BadInputException be = new BadInputException("공백은 입력할 수 없습니다. 다시 입력해주세요.");
-					try {
-						throw be;
-					} catch (BadInputException e) {
-						System.out.println(e.getMessage());
-						System.out.print("> ");
-					}
-				} else {
-					break;
-				}
-			}
-	
-			return result;
+	// 회원정보 수정
+	public void updateInfo(String password, String email, String phnum, String address, int userId) {
+		int result = userDao.updateUser(password, email, phnum, address, userId);
+		if(result > 0) {
+			System.out.println("회원정보가 수정되었습니다.");
 		}
+	}
 	
-	
-		// 이름에 한글과 영문만 가능하도록 하는
-		public String getName() {
-			String result = null;
+	// 회원 탈퇴
+	public int deleteUser(int userId, String password) {
+		int result = 0;
+		
+		if(userDao.passwordChk(userId, password)) {
+			result = userDao.deleteUser(userId);
 			
-			while(true) {
-				result = getString();
-				boolean check = false;
-				
-				for(int i = 0; i < result.length(); i++) {
-					char c = result.charAt(i);
-					if() {
-						check = true;
-						BadInputException be = new BadInputException("");
-						break;
-					}
-				}
-				
-				if(!check) {
-					break;
-				}
+			if(result > 0) {
+				System.out.println("회원 탈퇴가 완료되었습니다. 이용해주셔서 감사합니다.");
 			}
-			return result;
-		}
-		 
-		 
-	 * // 아이디에 영문소문자와 숫자만 가능하도록 + 중복 확인
-	
-		public String getUsername(Connection conn) {
-			String username = null;
-			username = getString();
 			
-			// 영문소문자와 숫자로만 되어 있는지 확인
-			while(true) {
-				username = getString();
-				boolean check = false;
-				
-				for(int i = 0; i < username.length(); i++) {
-					char c = username.charAt(i);
-					if(!(c >= 'a' && c <= 'z') && !(c >= 0 && c <= 9)) {
-						check = true;
-						BadInputException be = new BadInputException("영문소문자와 숫자만 입력할 수 있습니다.");
-						try {
-							throw be;
-						} catch (BadInputException e) {
-							System.out.println(e.getMessage());
-							System.out.println("다시 입력해주세요.");
-							System.out.print("> ");
-						}
-						break;					
-					}
-				}
-				
-				if(!check) {
-					break;
-				}
-			} //////////////////////////////////////////////
-
-			while (userDao.usernameCheck(conn, username)) {
-				System.out.println("이미 등록된 아이디입니다. 다시 입력해주세요.");
-				System.out.print("> ");
-				username = getString();
-			}
-
-			return username;
+		} else {
+			System.out.println("비밀번호를 잘못 입력하셨습니다. 회원 탈퇴를 취소합니다.");
 		}
-	 */
-
+		
+		return result;
+	}
+	
 }
