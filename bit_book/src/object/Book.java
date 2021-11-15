@@ -19,6 +19,15 @@ public class Book {
 		this.stock = stock;
 	}
 	
+	public Book(String bookName, int price, String writer, String publisher, int category,int stock) {
+		this.bookName = bookName;
+		this.price = price;
+		this.writer = writer;
+		this.publisher = publisher;
+		this.category = category;
+		this.stock = stock;
+	}
+	
 
 	public Book() {
 	}

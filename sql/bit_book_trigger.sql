@@ -29,7 +29,7 @@ end;
 --  2. 주문시 자동으로 주문정보 저장
 drop trigger AfterBookOrderLog;
 
-create trigger AfterBookOrderLog
+create or replace trigger AfterBookOrderLog
     after insert
     on bit_orders
     for each row

@@ -108,13 +108,13 @@ public class UserDao {
 	
 	////////////////////////////// MY INFO   ///////////////////////////////////
 	
-	// 파라미터로 들어온 userId에 해당하는 회원 정보를 리턴
-	public User selectByUserId(int userId) {
+	// 현재 로그인된 회원 정보를 리턴
+	public User selectByUserId() {
 		User user = null;
 		String sql = "select * from bit_users where userid = ?";
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, userId);
+			pstmt.setInt(1, logger.LoginUser.loginId);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
@@ -178,15 +178,15 @@ public class UserDao {
 		return resultCnt;
 	}
 	
-	// 회원 정보 삭제 : delete (userId)
-	public int deleteUser(int userId) {
+	// 회원 정보 삭제 : delete
+	public int deleteUser() {
 		int resultCnt = 0;
 		
 		String sql = "delete from bit_users where userid = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, userId);
+			pstmt.setInt(1, logger.LoginUser.loginId);
 			
 			resultCnt = pstmt.executeUpdate();
 		} catch (SQLException e) {

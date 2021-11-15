@@ -27,7 +27,6 @@ public class UserViewer {
 	
 	
 	// 일반회원 메뉴
-	
 	public void userMenu() {
 		while (logger.LoginUser.loginStatus) {
 
@@ -79,7 +78,6 @@ public class UserViewer {
 
 
 	// 내 정보 확인
-	
 	private void showMyInfo() {
 		while (logger.LoginUser.loginStatus) {
 			userController.showInfo();
@@ -112,7 +110,7 @@ public class UserViewer {
 	private void updateMyInfo() {
 		int logInId = logger.LoginUser.loginId;
 		System.out.println("회원정보 수정을 시작합니다.");
-		System.out.println("정말로 수정하시겠습니까? 수정하시려면 이전 비밀번호를 입력해주세요.");
+		System.out.println("정말로 수정하시겠습니까? 수정하시려면 비밀번호를 입력해주세요.");
 		String password = ScannerUtil.getString();
 
 		if (userController.userDao.passwordChk(password)) {
@@ -121,7 +119,7 @@ public class UserViewer {
 
 			System.out.print("변경할 이메일을 입력하세요.\n> ");
 			String email = ScannerUtil.getString();
-			while (!patternChk.emailForm(email)) {
+			while (!userController.patternChk.emailForm(email)) {
 				System.out.println("올바른 이메일 형식으로 입력하세요.");
 				System.out.print("변경할 이메일을 입력하세요.\n> ");
 				email = ScannerUtil.getString();
@@ -129,7 +127,7 @@ public class UserViewer {
 
 			System.out.print("변경할 전화번호를 입력하세요.\n> ");
 			String phnum = ScannerUtil.getString();
-			while (!patternChk.phnumForm(phnum)) {
+			while (!userController.patternChk.phnumForm(phnum)) {
 				System.out.println("올바른 전화번호 형식으로 입력하세요.");
 				System.out.print("변경할 전화번호를 입력하세요.\n> ");
 				phnum = ScannerUtil.getString();
@@ -148,7 +146,6 @@ public class UserViewer {
 
 	
 	// 회원 탈퇴
-	
 	private void deleteAccount() {
 		System.out.println("정말로 탈퇴하시겠습니까? Y/N");
 		String yesNo = ScannerUtil.getString();

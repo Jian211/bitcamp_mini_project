@@ -49,7 +49,6 @@ public class BookDao {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("!!System alert!!");
 			e.printStackTrace();
 		} finally {
 			JdbcUtil.close(rs);
@@ -74,8 +73,8 @@ public class BookDao {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				result.add(new Book(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5),
-						rs.getInt(6), rs.getInt(7)));
+				result.add(new Book(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), 
+								    rs.getString(5), rs.getInt(6), rs.getInt(7)));
 			}
 
 		} catch (SQLException e) {
@@ -130,7 +129,7 @@ public class BookDao {
 
 			rs = pstmt.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 				result.add(new Book(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5),
 						rs.getInt(6), rs.getInt(7)));
 			}
@@ -151,7 +150,7 @@ public class BookDao {
 		// 검색 결과 : 도서 정보
 		List<Book> result = new ArrayList<>();
 
-		String sql = "select * from book where publisher LIKE '%' || ? || '%'";
+		String sql = "select * from bit_book where publisher LIKE '%' || ? || '%'";
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -159,7 +158,7 @@ public class BookDao {
 
 			rs = pstmt.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 				result.add(new Book(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5),
 						rs.getInt(6), rs.getInt(7)));
 			}
@@ -193,7 +192,6 @@ public class BookDao {
 			resultCnt = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			JdbcUtil.close(pstmt);
@@ -202,11 +200,11 @@ public class BookDao {
 		return resultCnt;
 	}
 
-	// 도서 정보를 수정하는 메소드(수정 필요)
+	// 도서 정보를 수정하는 메소드
 	//
 	public int editBook(Book book) {
-		System.out.println(book.toString());
-		PreparedStatement pstmt = null;
+		
+		System.out.println(book.getBookid() + "번 도서의 정보가 수정 되었습니다.");
 
 		int resultCnt = 0;
 
@@ -236,6 +234,8 @@ public class BookDao {
 	// 도서를 삭제하는 메소드
 	public int deleteBook(int bookid) {
 
+		System.out.println(bookid + "번 도서가 삭제되었습니다.");
+		
 		int resultCnt = 0;
 		String sql = "delete from bit_book where bookid = ?";
 
@@ -266,10 +266,12 @@ public class BookDao {
 
 			resultCnt = pstmt.executeUpdate();
 			if (resultCnt > 0) {
-				System.out.println("[BookDao saleBook] 성공적으로 구입이 완료되었습니다. ");
+				System.out.println("성공적으로 도서 구입이 완료되었습니다. ");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(pstmt);
 		}
 
 	}
@@ -288,15 +290,17 @@ public class BookDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
 		}
 		return result;
 	}
 
 	// 도서 이름으로 도서ID값 반환하는 메소드
-	/*
-	public int getBookId(String bookTitle) {
+	public int getBookId(String bookName) {
 		int bookId = 0;
-		String sql = "select bookId from bit_book where bookname like '%" + bookTitle + "%'";
+		String sql = "select bookId from bit_book where bookname like '" + bookName + "'";
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -308,10 +312,12 @@ public class BookDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
 		}
 		return bookId;
 	}
-	*/
 
 	/*
 	// 고객이 주문한 리스트를 전달.
@@ -340,7 +346,7 @@ public class BookDao {
 		
 		try {
 			stmt = conn.createStatement();
-			String sql = "select * from (select * from BIT_BOOK order by DBMS_RANDOM.VALUE) where rownum <2";
+			String sql = "select * from BIT_BOOK order by DBMS_RANDOM.VALUE";
 			rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {
@@ -350,6 +356,9 @@ public class BookDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(stmt);
 		}
 		
 		return result;

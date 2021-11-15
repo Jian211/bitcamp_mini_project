@@ -10,6 +10,7 @@ import java.util.List;
 
 import connection.ConnectionProvider;
 import object.Orders;
+import util.JdbcUtil;
 
 public class OrdersDao {
 	Connection conn = null;
@@ -31,15 +32,6 @@ public class OrdersDao {
 		return ordersDao;
 	}
 	
-	public static void main(String[] args) {
-		OrdersDao dao = new OrdersDao();
-		List<Orders> list = dao.selectAllList();
-		for(Orders o : list) {
-			System.out.println(o);
-		}
-		
-	}
-	
 	// 주문이 존재하면 true를 리턴하는 메소드
 	public boolean selectCount() {
 		boolean result = false;
@@ -52,6 +44,9 @@ public class OrdersDao {
 			result = rs.next();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(stmt);
 		}
 		
 		return result;
@@ -66,10 +61,14 @@ public class OrdersDao {
 				String sql = "select * from orders_view";
 				rs = stmt.executeQuery(sql);
 				while (rs.next()) {
-					result.add(new Orders(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getInt(5), rs.getString(6)));
+					result.add(new Orders(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4),
+										  rs.getInt(5), rs.getString(6)));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
+			}finally {
+				JdbcUtil.close(rs);
+				JdbcUtil.close(stmt);
 			}
 
 			return result;
@@ -88,6 +87,9 @@ public class OrdersDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
 		}
 		
 		return result;
@@ -106,6 +108,9 @@ public class OrdersDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
 		}
 		
 		return result;
@@ -125,6 +130,9 @@ public class OrdersDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
 		}
 
 		return result;
@@ -144,6 +152,9 @@ public class OrdersDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
 		}
 		
 		return result;
@@ -163,6 +174,9 @@ public class OrdersDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
 		}
 
 		return result;
@@ -182,13 +196,16 @@ public class OrdersDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
 		}
 		
 		return result;
 	}
 	
 	
-	// 파라미터로 들어온 userId 가 구입한 목록을 리턴하는 메소드
+	// 로거클래스에 저장된 userId 가 구입한 목록을 리턴하는 메소드
 	public List<Orders> selectByUserId(){
 		List<Orders> result = new ArrayList<Orders>();
 		
@@ -199,10 +216,14 @@ public class OrdersDao {
 			pstmt.setInt(1, logger.LoginUser.loginId);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				result.add(new Orders(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getInt(5), rs.getString(6)));
+				result.add(new Orders(rs.getInt(1), rs.getInt(2), rs.getInt(3), 
+									  rs.getString(4), rs.getInt(5), rs.getString(6)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			JdbcUtil.close(rs);
+			JdbcUtil.close(pstmt);
 		}
 		
 		return result;

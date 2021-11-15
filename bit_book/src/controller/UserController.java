@@ -46,7 +46,7 @@ public class UserController {
 
 	// 회원정보 보기
 	public void showInfo() {
-		User user = userDao.selectByUserId(logger.LoginUser.loginId);
+		User user = userDao.selectByUserId();
 		
 		System.out.println("================================");
 		System.out.println("\t" + user.getName() + " 님의 정보");
@@ -73,7 +73,7 @@ public class UserController {
 		int result = 0;
 		
 		if(userDao.passwordChk(password)) {
-			result = userDao.deleteUser(logger.LoginUser.loginId);
+			result = userDao.deleteUser();
 			logger.LoginUser.logOut();
 			
 			if(result > 0) {

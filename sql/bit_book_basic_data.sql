@@ -7,6 +7,12 @@
 desc bit_book;
 select * from bit_book;
 select * from category;
+select * from bit_users;
+
+---------------- 관리자 정보 추가 ------------------------
+insert into bit_users (userid, username, password, name) values (1, 'admin', 'admin11', '관리자');
+
+
 ---------------- 카테고리 5종류 추가 ---------------------
 insert into category values(1,'유아');
 insert into category values(2,'IT');
@@ -17,7 +23,7 @@ insert into category values(5,'만화');
 ----- 데이터 20종류
 insert into bit_book values(1,'구름빵',19000,'백희나','한솔수복',1,9);
 insert into bit_book values(2,'거꾸로 읽는 세계사',17500,'유시민', '문학사상사',3,9);
-insert into bit_book values(3,'총,균,쇠',28000,'재래드','돌베개',3,9);
+insert into bit_book values(3,'총,균,쇠',28000,'재레드 다이아몬드','돌베개',3,9);
 insert into bit_book values(4,'역사의 쓸모',15000,'최태성','다산초당',1,9);
 insert into bit_book values(5,'메트로폴리스',27000,'벤 윌슨','매일경제신문사',1,9);
 insert into bit_book values(6,'세계사를 바꾼 10가지 감염병',17500,'조지무쇼','사람과나무사이',1,9);

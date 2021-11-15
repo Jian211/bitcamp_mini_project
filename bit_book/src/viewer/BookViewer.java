@@ -102,7 +102,7 @@ public class BookViewer {
 	
 	public void showSaleBookMenu() {
 		System.out.println("구매하실 책의 번호나 이름을 입력해주세요.");
-		System.out.print("1. 책 번호로 구입 \n2. 책 이름으로 구입 \n3. 뒤로가기");
+		System.out.println("1. 책 번호로 구입 \n2. 책 이름으로 구입 \n3. 뒤로가기");
 		System.out.println("=======================================");
 		System.out.print("> ");
 		
@@ -124,13 +124,11 @@ public class BookViewer {
 			
 		} else if ( userChoice == 2 ){
 			System.out.print("책 제목을 입력해주세요.\n> ");
+			
 			String bookName = ScannerUtil.scanString();
 
-			bookController.selectByName(bookName);
-			System.out.println("구입하실 책 번호를 입력해주세요.\n> ");
-			int bookId = ScannerUtil.scanInt();
+			result = bookController.buyBook(bookName);
 			
-			result = bookController.buyBook(bookId);
 			if(!result) {
 				System.out.println("현재 선택하신 책이 없습니다.");
 			} else {

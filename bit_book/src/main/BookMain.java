@@ -30,6 +30,7 @@ public class BookMain {
 			case 3:	// 종료
 				System.out.println("이용해주셔서 감사합니다.");
 				System.exit(0);
+				
 			default:
 				System.out.println("선택한 메뉴번호가 존재하지 않습니다.");
 			}

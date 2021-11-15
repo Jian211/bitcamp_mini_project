@@ -18,6 +18,7 @@ public class MainViewer {
 		adminViewer = new AdminViewer();
 	}
 	
+	
 	public void showLogin() {
 		while (true) {
 			System.out.println("아이디를 입력해주세요.");
@@ -85,11 +86,12 @@ public class MainViewer {
 			password = ScannerUtil.getString();
 		}
 
-		System.out.print("\n이름을 입력해주세요.\n> ");
+		System.out.print("\n이름을 입력해주세요. (영문 최대20글자, 한글 최대10글자)\n> ");
 		String name = ScannerUtil.getString();
 
 		while (!patternChk.nameForm(name)) {
 			System.out.println("잘못 입력하셨습니다. 다시 입력해주세요.");
+			System.out.println("이름은 영문20글자, 한글10글자를 넘을 수 없습니다.");
 			System.out.print("이름을 입력해주세요.\n> ");
 			name = ScannerUtil.getString();
 		}

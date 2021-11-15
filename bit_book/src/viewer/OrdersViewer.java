@@ -6,7 +6,6 @@ import util.ScannerUtil;
 
 public class OrdersViewer {
 
-	UserViewer userViewer;
 	OrdersController ordersController;
 	PatternChk patternChk;
 
