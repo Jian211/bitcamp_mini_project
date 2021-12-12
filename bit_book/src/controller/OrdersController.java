@@ -3,7 +3,7 @@ package controller;
 import java.util.List;
 
 import dao.OrdersDao;
-import object.Orders;
+import dto.Orders;
 
 public class OrdersController {
 

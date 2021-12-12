@@ -9,23 +9,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import connection.ConnectionProvider;
-import object.Book;
+import dto.Book;
 import util.JdbcUtil;
 
+/*
+	Dao 클래스에서 컨텍션을 생성자에서 생성 했는데	이런 경우 컨넥션을 종유 할수 없게됩니다.
+	컨넥션을 종료할 경우 인스턴스를 새로 만들어야 하는데 
+	현재 클래스는 싱글톤 패턴으로 되어 있어 문제가 됩니다.
+
+	???????????????? 이해불가
+*/
+
 public class BookDao {
-	Connection conn;
+	//Connection conn;
 	Statement stmt;
 	ResultSet rs;
 	PreparedStatement pstmt;
 
 	// 싱글톤
-	private BookDao() {
-		try {
-			conn = ConnectionProvider.getConnection();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+//	private BookDao() {
+//		try {
+//			conn = ConnectionProvider.getConnection();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	private static BookDao dao = new BookDao();
 
@@ -39,7 +47,8 @@ public class BookDao {
 		List<Book> result = new ArrayList<Book>();
 
 		try {
-			stmt = conn.createStatement();
+			stmt = ConnectionProvider.getConnection().createStatement();
+			//stmt = conn.createStatement();
 			String sql = "select * from bit_book";
 			rs = stmt.executeQuery(sql);
 

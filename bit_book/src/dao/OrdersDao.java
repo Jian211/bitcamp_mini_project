@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import connection.ConnectionProvider;
-import object.Orders;
+import dto.Orders;
 import util.JdbcUtil;
 
 public class OrdersDao {

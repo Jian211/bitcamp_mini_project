@@ -3,6 +3,7 @@ package viewer;
 import controller.BookController;
 import controller.OrdersController;
 import controller.UserController;
+import dto.User;
 import util.PatternChk;
 import util.ScannerUtil;
 
@@ -80,7 +81,19 @@ public class UserViewer {
 	// 내 정보 확인
 	private void showMyInfo() {
 		while (logger.LoginUser.loginStatus) {
-			userController.showInfo();
+			User user = userController.showInfo();
+
+			System.out.println("================================");
+			System.out.println("\t" + user.getName() + " 님의 정보");
+			System.out.println("================================");
+			
+			System.out.println("회원번호: " + logger.LoginUser.loginId);
+			System.out.println("아이디: " + user.getUserName());
+			System.out.println("이름: " + user.getName());
+			System.out.println("이메일: " + user.getEmail());
+			System.out.println("전화번호: " + user.getPhnum());
+			System.out.println("주소: " + user.getAddress());
+
 			System.out.println("================================");
 
 			System.out.println("1. 정보수정\t 2. 회원탈퇴\t 3. 뒤로가기");

@@ -2,7 +2,7 @@ package viewer;
 
 import controller.BookController;
 import controller.OrdersController;
-import object.Book;
+import dto.Book;
 import util.BookPatternChk;
 import util.PatternChk;
 import util.ScannerUtil;

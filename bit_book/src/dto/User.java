@@ -1,4 +1,4 @@
-package object;
+package dto;
 
 public class User {
 //	private int		userId;		// 유저 고유번호 : DB에서 관리

@@ -1,4 +1,4 @@
-package object;
+package dto;
 
 public class Book {
 	private int		bookid;

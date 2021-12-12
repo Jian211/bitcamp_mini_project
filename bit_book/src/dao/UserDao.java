@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import connection.ConnectionProvider;
-import object.User;
+import dto.User;
 import util.JdbcUtil;
 
 public class UserDao {

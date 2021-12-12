@@ -3,7 +3,7 @@ package controller;
 import java.util.List;
 
 import dao.BookDao;
-import object.Book;
+import dto.Book;
 
 public class BookController {
 	BookDao bookDao;

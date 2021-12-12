@@ -1,7 +1,7 @@
 package controller;
 
 import dao.UserDao;
-import object.User;
+import dto.User;
 import util.PatternChk;
 
 public class UserController {
@@ -16,18 +16,35 @@ public class UserController {
 	}
 	
 	
-	//////////////////////  JOIN ////////////////////////////////////
-	public void joinUser(String userName, String password, String name, String email, String phnum, String address) {	
-		User user = new User(userName, password, name, email, phnum, address);
-		int result = userDao.insertUser(user);
-		if(result > 0) {
-			System.out.println("회원가입이 완료되었습니다.");
+	// JOIN
+
+	// 잘 입력했는지 검사하고 결과를 반환
+	public boolean chkJoinPattern(User user) {
+		boolean [] result = new boolean[6];
+		result[0] = patternChk.userNameForm(user.getName());
+		result[1] = patternChk.emailForm(user.getEmail());
+		result[2] = patternChk.pwForm(user.getPassword());
+		result[3] = patternChk.phnumForm(user.getPhnum());
+		result[4] = patternChk.nameForm(user.getName());
+		result[5] = true;
+		
+		for (int i = 0; i < result.length; i++) {
+			if(!result[i]) {
+				return false;
+			}
 		}
+		
+		return true;
 	}
 	
+	public boolean joinUser(User user) {	
+		System.out.println(user.getName());
+		System.out.println(user.toString());
+		return userDao.insertUser(user) > 0;
+	}
+
 	
-	//////////////////////  LOGIN ////////////////////////////////////
-	
+	// LOGIN
 	// 로그인에 성공하면 해당 유저의 고유번호를 리턴하는 메소드  > 리턴이 아닌 로커 클래스 객체에 저장
 	public boolean auth(String userName, String password) {
 		boolean result = false;
@@ -43,21 +60,9 @@ public class UserController {
 	
 
 	//////////////////////  내정보 ////////////////////////////////////
-
 	// 회원정보 보기
-	public void showInfo() {
-		User user = userDao.selectByUserId();
-		
-		System.out.println("================================");
-		System.out.println("\t" + user.getName() + " 님의 정보");
-		System.out.println("================================");
-		
-		System.out.println("회원번호: " + logger.LoginUser.loginId);
-		System.out.println("아이디: " + user.getUserName());
-		System.out.println("이름: " + user.getName());
-		System.out.println("이메일: " + user.getEmail());
-		System.out.println("전화번호: " + user.getPhnum());
-		System.out.println("주소: " + user.getAddress());
+	public User showInfo() {
+		return userDao.selectByUserId();
 	}
 	
 	// 회원정보 수정
@@ -85,5 +90,8 @@ public class UserController {
 		}
 		
 	}
+
+
+	
 	
 }
